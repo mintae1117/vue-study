@@ -8,11 +8,14 @@ import { lifecycle as s } from './samples'
 
 const seconds = ref(0)
 const query = ref('')
-const logs = ref<string[]>([])
+// 로그는 앞에 쌓이고(unshift) 잘려나가므로(pop) index를 key로 쓰면 안 된다.
+// 각 줄에 고유 id 를 부여해 안정적으로 식별한다.
+let nextLogId = 0
+const logs = ref<{ id: number; text: string }[]>([])
 let timer: ReturnType<typeof setInterval> | undefined
 
 function log(msg: string) {
-  logs.value.unshift(`[${seconds.value}s] ${msg}`)
+  logs.value.unshift({ id: nextLogId++, text: `[${seconds.value}s] ${msg}` })
   if (logs.value.length > 6) logs.value.pop()
 }
 
@@ -75,7 +78,7 @@ watchEffect(() => {
       </div>
       <p class="text-xs text-muted-foreground">실행 로그 (watch / watchEffect):</p>
       <ul class="mt-1 space-y-0.5 pl-[1.1rem] font-mono text-[0.78rem]">
-        <li v-for="(l, i) in logs" :key="i">{{ l }}</li>
+        <li v-for="l in logs" :key="l.id">{{ l.text }}</li>
         <li v-if="!logs.length" class="opacity-50">아직 로그가 없습니다…</li>
       </ul>
     </DemoBox>

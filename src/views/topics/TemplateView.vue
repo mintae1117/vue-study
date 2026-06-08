@@ -8,13 +8,20 @@ import UiInput from '@/components/ui/UiInput.vue'
 import { template as s } from './samples'
 
 const show = ref(true)
-const fruits = ref(['🍎 사과', '🍌 바나나', '🍇 포도'])
+// 리스트가 변이(추가)되므로 index가 아닌 안정적인 id를 key로 쓴다.
+// 같은 이름을 두 번 추가해도 항목이 고유하게 식별된다.
+let nextFruitId = 0
+const fruits = ref([
+  { id: nextFruitId++, label: '🍎 사과' },
+  { id: nextFruitId++, label: '🍌 바나나' },
+  { id: nextFruitId++, label: '🍇 포도' },
+])
 const newFruit = ref('')
 
 function addFruit() {
   const v = newFruit.value.trim()
   if (!v) return
-  fruits.value.push(v)
+  fruits.value.push({ id: nextFruitId++, label: v })
   newFruit.value = ''
 }
 </script>
@@ -46,7 +53,7 @@ function addFruit() {
     <CompareCode :vue="s.vFor" :react="s.reactFor" />
     <DemoBox title="v-for 라이브 데모">
       <ul class="mb-4 list-disc pl-5">
-        <li v-for="(fruit, i) in fruits" :key="i" class="my-1">{{ fruit }}</li>
+        <li v-for="fruit in fruits" :key="fruit.id" class="my-1">{{ fruit.label }}</li>
       </ul>
       <div class="flex flex-wrap items-center gap-4">
         <UiInput
