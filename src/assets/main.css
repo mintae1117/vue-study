@@ -1,35 +1,37 @@
 @import './base.css';
 
+/* 학습 앱은 사이드바 + 본문 풀스크린 레이아웃이므로
+   create-vue 기본 템플릿의 중앙 정렬/2열 그리드는 사용하지 않는다. */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
   font-weight: normal;
 }
 
-a,
+a {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.3s;
+}
+
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+}
+
+p > a,
+li > a {
+  padding: 1px 2px;
+  border-radius: 3px;
 }
 
 @media (hover: hover) {
-  a:hover {
+  p > a:hover,
+  li > a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+strong {
+  font-weight: 600;
+  color: var(--color-heading);
 }
