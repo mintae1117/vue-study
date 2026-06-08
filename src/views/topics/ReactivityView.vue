@@ -3,6 +3,7 @@ import { ref, reactive, computed } from 'vue'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiButton from '@/components/ui/UiButton.vue'
 import { reactivity as s } from './samples'
 
 // --- 라이브 데모용 상태 ---
@@ -34,13 +35,12 @@ const profile = reactive({ name: '민태', likes: 0 })
     <CompareCode :vue="s.vueRef" :react="s.reactState" />
 
     <DemoBox title="ref + computed 라이브 데모">
-      <div class="row">
-        <button class="btn" @click="count++">count++</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <UiButton @click="count++">count++</UiButton>
+        <span>count = <strong class="font-semibold text-foreground">{{ count }}</strong></span>
         <span
-          >count = <strong>{{ count }}</strong></span
-        >
-        <span
-          >double(computed) = <strong>{{ double }}</strong></span
+          >double(computed) =
+          <strong class="font-semibold text-foreground">{{ double }}</strong></span
         >
       </div>
     </DemoBox>
@@ -55,11 +55,12 @@ const profile = reactive({ name: '민태', likes: 0 })
     <CompareCode :vue="s.reactiveVue" :react="s.reactiveReact" vue-lang="ts" react-lang="tsx" />
 
     <DemoBox title="reactive 라이브 데모">
-      <div class="row">
+      <div class="flex flex-wrap items-center gap-4">
         <span
-          >{{ profile.name }} 님의 좋아요: <strong>{{ profile.likes }}</strong></span
+          >{{ profile.name }} 님의 좋아요:
+          <strong class="font-semibold text-foreground">{{ profile.likes }}</strong></span
         >
-        <button class="btn" @click="profile.likes++">👍 좋아요</button>
+        <UiButton @click="profile.likes++">👍 좋아요</UiButton>
       </div>
     </DemoBox>
 
@@ -70,26 +71,3 @@ const profile = reactive({ name: '민태', likes: 0 })
     </div>
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.btn {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.btn:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  color: hsla(160, 100%, 37%, 1);
-  background: transparent;
-}
-</style>

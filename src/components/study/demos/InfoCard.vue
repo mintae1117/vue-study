@@ -3,31 +3,14 @@
 </script>
 
 <template>
-  <div class="info-card">
+  <div class="overflow-hidden rounded-lg border border-border">
     <!-- named slot: React의 <Card title={...}> 처럼 특정 자리 -->
-    <header class="ic-head">
+    <header class="border-b border-border bg-surface-muted px-3.5 py-2 font-semibold text-heading">
       <slot name="title">기본 제목</slot>
     </header>
     <!-- default slot: React의 {children} 에 해당 -->
-    <div class="ic-body">
+    <div class="p-3.5">
       <slot />
     </div>
   </div>
 </template>
-
-<style scoped>
-.info-card {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.ic-head {
-  padding: 0.5rem 0.9rem;
-  background: var(--color-background-mute);
-  font-weight: 600;
-  border-bottom: 1px solid var(--color-border);
-}
-.ic-body {
-  padding: 0.9rem;
-}
-</style>

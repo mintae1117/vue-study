@@ -22,13 +22,14 @@ const total = ref(0)
     <h2>이벤트 — defineEmits vs 콜백 prop</h2>
     <CompareCode :vue="s.vueProps" :react="s.reactProps" vue-lang="vue" react-lang="tsx" />
     <DemoBox title="emit 라이브 데모">
-      <div class="row">
+      <div class="flex flex-wrap items-center gap-4">
         <LikeButton label="좋아요 누르기" @liked="total++" />
         <span
-          >자식이 올려보낸 누적 좋아요: <strong>{{ total }}</strong></span
+          >자식이 올려보낸 누적 좋아요:
+          <strong class="font-semibold text-foreground">{{ total }}</strong></span
         >
       </div>
-      <p style="font-size: 0.82rem; opacity: 0.7; margin-top: 0.6rem">
+      <p class="mt-2.5 text-[0.82rem] text-muted-foreground">
         자식 <code>LikeButton</code>이 <code>emit('liked', 1)</code> → 부모가
         <code>@liked="total++"</code>로 수신
       </p>
@@ -45,7 +46,7 @@ const total = ref(0)
     <DemoBox title="slot 라이브 데모">
       <InfoCard>
         <template #title>📌 신혼여행 메모</template>
-        <p style="margin: 0">
+        <p class="m-0">
           이 카드의 제목은 <code>#title</code> 슬롯, 이 문장은 default 슬롯으로 들어왔습니다.
         </p>
       </InfoCard>
@@ -56,12 +57,3 @@ const total = ref(0)
     </div>
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-</style>

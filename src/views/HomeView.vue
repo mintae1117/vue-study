@@ -1,142 +1,70 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { topics } from '@/data/topics'
+
+const mapping: { react: string; vue: string }[] = [
+  { react: 'useState', vue: 'ref / reactive' },
+  { react: 'useMemo', vue: 'computed' },
+  { react: 'useEffect', vue: 'watch / watchEffect / onMounted' },
+  { react: 'JSX', vue: '<template> + 디렉티브' },
+  { react: 'controlled input', vue: 'v-model' },
+  { react: '콜백 prop', vue: 'emit' },
+  { react: 'children', vue: '<slot>' },
+  { react: 'Redux / Zustand', vue: 'Pinia' },
+  { react: 'react-router', vue: 'vue-router' },
+]
 </script>
 
 <template>
-  <div class="home">
-    <header class="hero">
-      <h1>React 개발자를 위한 <span class="accent">Vue 3</span> 학습 노트</h1>
-      <p class="lead">
+  <div class="max-w-[880px]">
+    <header>
+      <h1 class="text-3xl font-bold leading-tight text-heading">
+        React 개발자를 위한 <span class="text-brand">Vue 3</span> 학습 노트
+      </h1>
+      <p class="mt-3 text-base text-muted-foreground">
         이미 React를 아는 사람 입장에서 Vue 3 (Composition API)를 비교하며 익히는 인터랙티브 가이드.
-        각 주제마다 <strong>개념 설명 · 라이브 데모 · Vue vs React 코드 비교</strong>가 들어 있습니다.
+        각 주제마다 <strong class="font-semibold text-foreground">개념 설명 · 라이브 데모 · Vue vs
+        React 코드 비교</strong>가 들어 있습니다.
       </p>
     </header>
 
-    <section class="mental-model">
-      <h2>한 장 요약 — 멘탈 모델 매핑</h2>
-      <div class="table">
-        <div class="tr th"><span>React</span><span>Vue 3</span></div>
-        <div class="tr">
-          <span><code>useState</code></span><span><code>ref</code> / <code>reactive</code></span>
+    <section>
+      <h2 class="mb-3 mt-9 text-xl font-semibold text-heading">한 장 요약 — 멘탈 모델 매핑</h2>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <div class="grid grid-cols-[1fr_1.4fr] bg-surface-muted font-semibold text-heading">
+          <span class="border-r border-border px-3.5 py-2.5">React</span>
+          <span class="px-3.5 py-2.5">Vue 3</span>
         </div>
-        <div class="tr"><span><code>useMemo</code></span><span><code>computed</code></span></div>
-        <div class="tr">
-          <span><code>useEffect</code></span
-          ><span><code>watch</code> / <code>watchEffect</code> / <code>onMounted</code></span>
+        <div
+          v-for="(m, i) in mapping"
+          :key="m.react"
+          class="grid grid-cols-[1fr_1.4fr]"
+          :class="i < mapping.length - 1 ? 'border-b border-border' : ''"
+        >
+          <span class="border-r border-border px-3.5 py-2"
+            ><code class="rounded bg-surface-muted px-1.5 py-px font-mono text-[0.82em]">{{
+              m.react
+            }}</code></span
+          >
+          <span class="px-3.5 py-2 text-foreground">{{ m.vue }}</span>
         </div>
-        <div class="tr"><span>JSX</span><span><code>&lt;template&gt;</code> + 디렉티브</span></div>
-        <div class="tr"><span>controlled input</span><span><code>v-model</code></span></div>
-        <div class="tr"><span>콜백 prop</span><span><code>emit</code></span></div>
-        <div class="tr"><span><code>children</code></span><span><code>&lt;slot&gt;</code></span></div>
-        <div class="tr"><span>Redux / Zustand</span><span>Pinia</span></div>
-        <div class="tr"><span>react-router</span><span>vue-router</span></div>
       </div>
     </section>
 
-    <section class="topics">
-      <h2>학습 토픽</h2>
-      <div class="cards">
-        <RouterLink v-for="t in topics" :key="t.path" :to="t.path" class="card">
-          <span class="card-no">{{ String(t.no).padStart(2, '0') }}</span>
-          <span class="card-title">{{ t.title }}</span>
-          <span class="card-summary">{{ t.summary }}</span>
+    <section>
+      <h2 class="mb-3 mt-9 text-xl font-semibold text-heading">학습 토픽</h2>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
+        <RouterLink
+          v-for="t in topics"
+          :key="t.path"
+          :to="t.path"
+          class="group flex flex-col gap-1 rounded-xl border border-border p-4 no-underline transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-surface"
+        >
+          <span class="text-xs font-bold text-brand">{{ String(t.no).padStart(2, '0') }}</span>
+          <span class="font-semibold text-heading">{{ t.title }}</span>
+          <span class="text-xs text-muted-foreground">{{ t.summary }}</span>
         </RouterLink>
       </div>
     </section>
   </div>
 </template>
-
-<style scoped>
-.home {
-  max-width: 880px;
-}
-.hero h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-heading);
-  line-height: 1.25;
-}
-.accent {
-  color: hsla(160, 100%, 37%, 1);
-}
-.lead {
-  margin-top: 0.8rem;
-  font-size: 1rem;
-  opacity: 0.85;
-}
-h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--color-heading);
-  margin: 2.2rem 0 0.8rem;
-}
-.table {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.tr {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  border-bottom: 1px solid var(--color-border);
-}
-.tr:last-child {
-  border-bottom: 0;
-}
-.tr span {
-  padding: 0.55rem 0.9rem;
-}
-.tr span:first-child {
-  border-right: 1px solid var(--color-border);
-}
-.tr.th {
-  font-weight: 600;
-  background: var(--color-background-mute);
-  color: var(--color-heading);
-}
-.tr code {
-  font-family: 'Fira Code', ui-monospace, monospace;
-  font-size: 0.82em;
-  background: var(--color-background-mute);
-  padding: 1px 5px;
-  border-radius: 4px;
-}
-.tr.th code {
-  background: transparent;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 0.8rem;
-}
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  text-decoration: none;
-  color: var(--color-text);
-  transition: all 0.2s;
-}
-.card:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  background: var(--color-background-soft);
-  transform: translateY(-2px);
-}
-.card-no {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: hsla(160, 100%, 37%, 1);
-}
-.card-title {
-  font-weight: 600;
-  color: var(--color-heading);
-}
-.card-summary {
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-</style>

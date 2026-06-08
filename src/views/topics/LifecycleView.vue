@@ -3,6 +3,7 @@ import { ref, watch, watchEffect, onMounted, onUnmounted } from 'vue'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiInput from '@/components/ui/UiInput.vue'
 import { lifecycle as s } from './samples'
 
 const seconds = ref(0)
@@ -65,15 +66,17 @@ watchEffect(() => {
 
     <DemoBox title="라이브 데모 — 타이머 + watch 로그">
       <p>
-        ⏱ 마운트 후 경과: <strong>{{ seconds }}초</strong> (onMounted에서 시작한 setInterval)
+        ⏱ 마운트 후 경과:
+        <strong class="font-semibold text-foreground">{{ seconds }}초</strong> (onMounted에서 시작한
+        setInterval)
       </p>
-      <div class="row" style="margin: 0.8rem 0">
-        <input v-model="query" class="input" placeholder="입력하면 watch가 감지" />
+      <div class="my-3">
+        <UiInput v-model="query" class="max-w-sm" placeholder="입력하면 watch가 감지" />
       </div>
-      <p style="font-size: 0.8rem; opacity: 0.7">실행 로그 (watch / watchEffect):</p>
-      <ul class="logs">
+      <p class="text-xs text-muted-foreground">실행 로그 (watch / watchEffect):</p>
+      <ul class="mt-1 space-y-0.5 pl-[1.1rem] font-mono text-[0.78rem]">
         <li v-for="(l, i) in logs" :key="i">{{ l }}</li>
-        <li v-if="!logs.length" style="opacity: 0.5">아직 로그가 없습니다…</li>
+        <li v-if="!logs.length" class="opacity-50">아직 로그가 없습니다…</li>
       </ul>
     </DemoBox>
     <div class="key">
@@ -82,31 +85,3 @@ watchEffect(() => {
     </div>
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.input {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  width: 100%;
-  max-width: 320px;
-}
-.logs {
-  margin: 0.4rem 0 0;
-  padding-left: 1.1rem;
-  font-family: 'Fira Code', ui-monospace, monospace;
-  font-size: 0.78rem;
-}
-.logs li {
-  margin: 0.15rem 0;
-}
-</style>

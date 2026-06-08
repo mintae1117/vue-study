@@ -4,6 +4,7 @@ import { useCounterStore } from '@/stores/counter'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiButton from '@/components/ui/UiButton.vue'
 import { state as s } from './samples'
 
 // 이 프로젝트에 원래 있던 Pinia 스토어를 그대로 사용.
@@ -34,16 +35,15 @@ const { count, doubleCount } = storeToRefs(counter)
     <CompareCode :vue="s.vueStore" :react="s.zustandStore" vue-lang="ts" react-lang="ts" />
 
     <DemoBox title="Pinia 라이브 데모 (전역 스토어)">
-      <div class="row">
-        <button class="btn" @click="counter.increment()">increment()</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <UiButton @click="counter.increment()">increment()</UiButton>
+        <span>count = <strong class="font-semibold text-foreground">{{ count }}</strong></span>
         <span
-          >count = <strong>{{ count }}</strong></span
-        >
-        <span
-          >doubleCount(getter) = <strong>{{ doubleCount }}</strong></span
+          >doubleCount(getter) =
+          <strong class="font-semibold text-foreground">{{ doubleCount }}</strong></span
         >
       </div>
-      <p style="font-size: 0.82rem; opacity: 0.7; margin-top: 0.6rem">
+      <p class="mt-2.5 text-[0.82rem] text-muted-foreground">
         이 값은 <strong>전역</strong>입니다. 다른 메뉴(예: 라우팅 페이지)로 갔다 와도 값이 유지됩니다 —
         Redux store / Zustand store 가 컴포넌트 트리 밖에 사는 것과 같습니다.
       </p>
@@ -63,26 +63,3 @@ const { count, doubleCount } = storeToRefs(counter)
     />
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.btn {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.btn:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  color: hsla(160, 100%, 37%, 1);
-  background: transparent;
-}
-</style>

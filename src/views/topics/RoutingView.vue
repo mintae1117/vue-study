@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiButton from '@/components/ui/UiButton.vue'
 import { routing as s } from './samples'
 
 const route = useRoute()
@@ -31,22 +32,25 @@ const router = useRouter()
     <CompareCode :vue="s.vueNav" :react="s.reactNav" vue-lang="ts" react-lang="tsx" />
 
     <DemoBox title="라이브 데모 — 현재 라우트 정보">
-      <ul class="route-info">
+      <ul class="list-disc space-y-1 pl-[1.1rem]">
         <li>
-          <code>route.path</code> → <strong>{{ route.path }}</strong>
+          <code>route.path</code> →
+          <strong class="font-semibold text-foreground">{{ route.path }}</strong>
         </li>
         <li>
-          <code>route.name</code> → <strong>{{ String(route.name) }}</strong>
+          <code>route.name</code> →
+          <strong class="font-semibold text-foreground">{{ String(route.name) }}</strong>
         </li>
         <li>
-          <code>route.fullPath</code> → <strong>{{ route.fullPath }}</strong>
+          <code>route.fullPath</code> →
+          <strong class="font-semibold text-foreground">{{ route.fullPath }}</strong>
         </li>
       </ul>
-      <div class="row" style="margin-top: 0.8rem">
-        <button class="btn" @click="router.push('/reactivity')">push('/reactivity')</button>
-        <button class="btn" @click="router.back()">router.back()</button>
+      <div class="mt-3 flex flex-wrap items-center gap-4">
+        <UiButton @click="router.push('/reactivity')">push('/reactivity')</UiButton>
+        <UiButton @click="router.back()">router.back()</UiButton>
       </div>
-      <p style="font-size: 0.82rem; opacity: 0.7; margin-top: 0.6rem">
+      <p class="mt-2.5 text-[0.82rem] text-muted-foreground">
         위 버튼은 이 앱의 사이드바와 동일하게 <code>useRouter()</code>로 코드 이동합니다.
       </p>
     </DemoBox>
@@ -58,33 +62,3 @@ const router = useRouter()
     </div>
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.route-info {
-  margin: 0;
-  padding-left: 1.1rem;
-}
-.route-info li {
-  margin: 0.3rem 0;
-}
-.btn {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.btn:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  color: hsla(160, 100%, 37%, 1);
-  background: transparent;
-}
-</style>

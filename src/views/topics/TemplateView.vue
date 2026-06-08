@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiButton from '@/components/ui/UiButton.vue'
+import UiInput from '@/components/ui/UiInput.vue'
 import { template as s } from './samples'
 
 const show = ref(true)
@@ -28,8 +30,8 @@ function addFruit() {
     <h2>조건부 렌더링 — v-if / v-else vs 삼항</h2>
     <CompareCode :vue="s.vIf" :react="s.reactIf" />
     <DemoBox title="v-if / v-show 라이브 데모">
-      <div class="row">
-        <button class="btn" @click="show = !show">토글</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <UiButton @click="show = !show">토글</UiButton>
         <p v-if="show">✅ v-if: 지금 보입니다</p>
         <p v-else>🚫 v-if: 숨겨졌어요 (DOM에서 제거됨)</p>
       </div>
@@ -43,17 +45,17 @@ function addFruit() {
     <h2>리스트 렌더링 — v-for vs map</h2>
     <CompareCode :vue="s.vFor" :react="s.reactFor" />
     <DemoBox title="v-for 라이브 데모">
-      <ul class="fruit-list">
-        <li v-for="(fruit, i) in fruits" :key="i">{{ fruit }}</li>
+      <ul class="mb-4 list-disc pl-5">
+        <li v-for="(fruit, i) in fruits" :key="i" class="my-1">{{ fruit }}</li>
       </ul>
-      <div class="row">
-        <input
+      <div class="flex flex-wrap items-center gap-4">
+        <UiInput
           v-model="newFruit"
-          class="input"
+          class="max-w-xs flex-1"
           placeholder="과일 추가 후 Enter"
           @keyup.enter="addFruit"
         />
-        <button class="btn" @click="addFruit">추가</button>
+        <UiButton @click="addFruit">추가</UiButton>
       </div>
     </DemoBox>
     <div class="key">
@@ -64,41 +66,3 @@ function addFruit() {
     <CompareCode :vue="s.vBind" :react="s.reactBind" vue-lang="vue" react-lang="tsx" />
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.btn {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.btn:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  color: hsla(160, 100%, 37%, 1);
-  background: transparent;
-}
-.input {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-.fruit-list {
-  margin: 0 0 1rem;
-  padding-left: 1.2rem;
-}
-.fruit-list li {
-  margin: 0.25rem 0;
-}
-</style>

@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="">
+<!doctype html>
+<html lang="ko">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 3 ↔ React 학습 노트</title>
+    <!--
+      No-FOUC theme bootstrap.
+      Runs before CSS paints so the correct theme class is on <html> from the
+      very first frame — prevents a light/dark flash on load. Mirrors the logic
+      in src/composables/useTheme.ts (storage key + system fallback).
+    -->
+    <script>
+      ;(function () {
+        try {
+          var m = localStorage.getItem('vue-study-theme') || 'system'
+          var dark =
+            m === 'dark' ||
+            (m === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {
+          /* localStorage unavailable — fall back to light */
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

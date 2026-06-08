@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import TopicPage from '@/components/study/TopicPage.vue'
 import CompareCode from '@/components/study/CompareCode.vue'
 import DemoBox from '@/components/study/DemoBox.vue'
+import UiButton from '@/components/ui/UiButton.vue'
+import UiInput from '@/components/ui/UiInput.vue'
 import { forms as s } from './samples'
 
 const text = ref('')
@@ -23,22 +25,28 @@ const clicks = ref(0)
     <h2>v-model vs controlled component</h2>
     <CompareCode :vue="s.vModel" :react="s.reactControlled" />
     <DemoBox title="v-model 라이브 데모">
-      <input v-model="text" class="input" placeholder="여기에 입력해 보세요" />
-      <p style="margin-top: 0.6rem">
-        입력값: <strong>{{ text || '(비어있음)' }}</strong> — 글자 수 {{ text.length }}
+      <UiInput v-model="text" class="max-w-sm" placeholder="여기에 입력해 보세요" />
+      <p class="mt-2.5">
+        입력값:
+        <strong class="font-semibold text-foreground">{{ text || '(비어있음)' }}</strong> — 글자 수
+        {{ text.length }}
       </p>
     </DemoBox>
 
     <h2>다양한 입력에도 v-model 하나로</h2>
     <DemoBox title="체크박스 · 라디오 v-model">
-      <label class="line">
-        <input type="checkbox" v-model="agreed" /> 약관에 동의합니다
-        <em>→ {{ agreed }}</em>
+      <label class="my-1.5 flex flex-wrap items-center gap-4">
+        <input type="checkbox" v-model="agreed" class="accent-brand" /> 약관에 동의합니다
+        <em class="not-italic text-muted-foreground">→ {{ agreed }}</em>
       </label>
-      <div class="line">
-        <label><input type="radio" value="vue" v-model="pick" /> Vue</label>
-        <label><input type="radio" value="react" v-model="pick" /> React</label>
-        <em>→ 선택: {{ pick }}</em>
+      <div class="my-1.5 flex flex-wrap items-center gap-4">
+        <label class="flex items-center gap-1.5"
+          ><input type="radio" value="vue" v-model="pick" class="accent-brand" /> Vue</label
+        >
+        <label class="flex items-center gap-1.5"
+          ><input type="radio" value="react" v-model="pick" class="accent-brand" /> React</label
+        >
+        <em class="not-italic text-muted-foreground">→ 선택: {{ pick }}</em>
       </div>
     </DemoBox>
     <div class="key">
@@ -49,8 +57,8 @@ const clicks = ref(0)
     <h2>이벤트 핸들링 — @click 과 이벤트 수식어</h2>
     <CompareCode :vue="s.vEvents" :react="s.reactEvents" vue-lang="vue" react-lang="tsx" />
     <DemoBox title="이벤트 수식어 .prevent / .enter">
-      <div class="row">
-        <button class="btn" @click="clicks++">클릭 {{ clicks }}회</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <UiButton @click="clicks++">클릭 {{ clicks }}회</UiButton>
         <span>@click="clicks++" 처럼 인라인 식도 가능</span>
       </div>
     </DemoBox>
@@ -61,46 +69,3 @@ const clicks = ref(0)
     </div>
   </TopicPage>
 </template>
-
-<style scoped>
-.row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.line {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 0.4rem 0;
-}
-.line em {
-  opacity: 0.7;
-  font-style: normal;
-}
-.btn {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.btn:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-  color: hsla(160, 100%, 37%, 1);
-  background: transparent;
-}
-.input {
-  border: 1px solid var(--color-border-hover);
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  width: 100%;
-  max-width: 320px;
-}
-</style>

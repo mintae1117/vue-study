@@ -2,6 +2,7 @@
 import CodeBlock from './CodeBlock.vue'
 
 // Vue 코드와 React 코드를 나란히 비교해서 보여주는 카드.
+// 레이아웃은 Tailwind 유틸리티, 색상은 디자인 토큰(brand)으로.
 defineProps<{
   vue: string
   react: string
@@ -11,53 +12,20 @@ defineProps<{
 </script>
 
 <template>
-  <div class="compare">
-    <div class="pane">
-      <span class="tag tag-vue">Vue</span>
+  <div class="my-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="min-w-0">
+      <span
+        class="mb-2 inline-block rounded-full bg-brand px-2.5 py-0.5 text-[11px] font-semibold tracking-wide text-brand-contrast"
+        >Vue</span
+      >
       <CodeBlock :code="vue" :lang="vueLang ?? 'vue'" />
     </div>
-    <div class="pane">
-      <span class="tag tag-react">React</span>
+    <div class="min-w-0">
+      <span
+        class="mb-2 inline-block rounded-full bg-[#61afef] px-2.5 py-0.5 text-[11px] font-semibold tracking-wide text-[#0a0a0a]"
+        >React</span
+      >
       <CodeBlock :code="react" :lang="reactLang ?? 'tsx'" />
     </div>
   </div>
 </template>
-
-<style scoped>
-.compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-.pane {
-  min-width: 0; /* grid 셀 안에서 overflow-x 스크롤이 동작하도록 */
-}
-
-.tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 2px 9px;
-  border-radius: 999px;
-  margin-bottom: 0.5rem;
-}
-
-.tag-vue {
-  color: #fff;
-  background: hsla(160, 100%, 37%, 1);
-}
-
-.tag-react {
-  color: #fff;
-  background: #61afef;
-}
-
-@media (max-width: 860px) {
-  .compare {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
