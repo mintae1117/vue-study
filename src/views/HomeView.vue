@@ -16,15 +16,17 @@ const mapping: { react: string; vue: string }[] = [
 </script>
 
 <template>
-  <div class="max-w-[880px]">
+  <div class="max-w-220">
     <header>
       <h1 class="text-3xl font-bold leading-tight text-heading">
         React 개발자를 위한 <span class="text-brand">Vue 3</span> 학습 노트
       </h1>
       <p class="mt-3 text-base text-muted-foreground">
         이미 React를 아는 사람 입장에서 Vue 3 (Composition API)를 비교하며 익히는 인터랙티브 가이드.
-        각 주제마다 <strong class="font-semibold text-foreground">개념 설명 · 라이브 데모 · Vue vs
-        React 코드 비교</strong>가 들어 있습니다.
+        각 주제마다
+        <strong class="font-semibold text-foreground"
+          >개념 설명 · 라이브 데모 · Vue vs React 코드 비교</strong
+        >가 들어 있습니다.
       </p>
     </header>
 
