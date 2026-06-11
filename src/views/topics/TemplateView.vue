@@ -44,9 +44,9 @@ function addFruit() {
       </div>
     </DemoBox>
     <div class="key">
-      <strong>v-if vs v-show:</strong> <code>v-if</code>는 DOM을 실제로 추가/제거(React 삼항과 동일),
-      <code>v-show</code>는 <code>display:none</code>만 토글합니다. 자주 깜빡이면 <code>v-show</code>가
-      유리 — React에는 없는 구분입니다.
+      <strong>v-if vs v-show:</strong> <code>v-if</code>는 DOM을 실제로 추가/제거(React 삼항과
+      동일), <code>v-show</code>는 <code>display:none</code>만 토글합니다. 자주 깜빡이면
+      <code>v-show</code>가 유리 — React에는 없는 구분입니다.
     </div>
 
     <h2>리스트 렌더링 — v-for vs map</h2>
@@ -71,5 +71,19 @@ function addFruit() {
 
     <h2>속성 바인딩 — v-bind(:) vs {중괄호}</h2>
     <CompareCode :vue="s.vBind" :react="s.reactBind" vue-lang="vue" react-lang="tsx" />
+
+    <h2>v-if + v-for 를 같은 요소에 쓰지 않기</h2>
+    <p>
+      JSX 에선 <code>filter().map()</code> 으로 자연스럽게 풀리던 "조건부 리스트"가, Vue 에선 함정이
+      하나 있습니다 — 같은 요소에 두 디렉티브를 함께 쓰면
+      <strong><code>v-if</code> 가 먼저 평가</strong>되어 <code>v-for</code> 의 변수에 접근할 수
+      없습니다.
+    </p>
+    <CompareCode :vue="s.vForIf" :react="s.reactForIf" vue-lang="vue" react-lang="tsx" />
+    <div class="key">
+      <strong>덤 — React 와 똑같이 통하는 트릭:</strong> <code>:key</code> 값을 바꾸면 컴포넌트가
+      강제 리마운트됩니다. <code>&lt;UserProfile :key="userId" /&gt;</code> 처럼 "id 가 바뀌면
+      상태를 초기화하고 싶을 때" 양쪽 프레임워크에서 동일하게 쓰는 패턴입니다.
+    </div>
   </TopicPage>
 </template>

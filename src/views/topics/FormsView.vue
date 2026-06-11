@@ -11,15 +11,28 @@ const text = ref('')
 const agreed = ref(false)
 const pick = ref('vue')
 const clicks = ref(0)
+
+// v-model 수식어 데모용 (.number 는 변환 실패 시 문자열을 그대로 두므로 union 타입)
+const trimmed = ref('')
+const amount = ref<number | string>(0)
+const memo = ref('')
+
+const inputCls =
+  'h-9 w-48 rounded-md border border-border-strong bg-background px-3 text-sm text-foreground ' +
+  'placeholder:text-muted-foreground focus-visible:border-brand focus-visible:outline-none'
 </script>
 
 <template>
-  <TopicPage :no="3" title="이벤트 & 폼 바인딩" subtitle="v-on(@) / v-model vs onChange (controlled)">
+  <TopicPage
+    :no="3"
+    title="이벤트 & 폼 바인딩"
+    subtitle="v-on(@) / v-model vs onChange (controlled)"
+  >
     <p>
       React의 폼은 <strong>controlled component</strong> — <code>value</code>와
       <code>onChange</code>를 손수 연결합니다. Vue는 이걸 <code>v-model</code> 하나로 처리하는
-      <strong>양방향 바인딩</strong>을 제공합니다. 내부적으로는 똑같이 "value 바인딩 + 이벤트 핸들러"라서
-      마법이 아니라 문법 설탕입니다.
+      <strong>양방향 바인딩</strong>을 제공합니다. 내부적으로는 똑같이 "value 바인딩 + 이벤트
+      핸들러"라서 마법이 아니라 문법 설탕입니다.
     </p>
 
     <h2>v-model vs controlled component</h2>
@@ -54,6 +67,31 @@ const clicks = ref(0)
       매핑합니다. React라면 각각 <code>checked</code>/<code>value</code>를 분기해서 다뤄야 합니다.
     </div>
 
+    <h2>v-model 수식어 — .trim / .number / .lazy</h2>
+    <p>
+      이벤트에 수식어가 있듯 <code>v-model</code> 에도 수식어가 있습니다. React 에서
+      <code>onChange</code> 안에 직접 쓰던 입력값 정리 코드가 선언 한 단어로 끝납니다.
+    </p>
+    <CompareCode :vue="s.vModifiers" :react="s.reactModifiers" vue-lang="vue" react-lang="tsx" />
+    <DemoBox title="v-model 수식어 라이브 데모">
+      <div class="space-y-2.5">
+        <label class="flex flex-wrap items-center gap-3">
+          <input v-model.trim="trimmed" placeholder=".trim — 공백 넣어보세요" :class="inputCls" />
+          <em class="not-italic text-muted-foreground">→ "{{ trimmed }}" (양끝 공백 제거됨)</em>
+        </label>
+        <label class="flex flex-wrap items-center gap-3">
+          <input v-model.number="amount" placeholder=".number" :class="inputCls" />
+          <em class="not-italic text-muted-foreground"
+            >→ {{ amount }} (typeof: {{ typeof amount }})</em
+          >
+        </label>
+        <label class="flex flex-wrap items-center gap-3">
+          <input v-model.lazy="memo" placeholder=".lazy — blur/Enter 에 반영" :class="inputCls" />
+          <em class="not-italic text-muted-foreground">→ {{ memo || '(비어있음)' }}</em>
+        </label>
+      </div>
+    </DemoBox>
+
     <h2>이벤트 핸들링 — @click 과 이벤트 수식어</h2>
     <CompareCode :vue="s.vEvents" :react="s.reactEvents" vue-lang="vue" react-lang="tsx" />
     <DemoBox title="이벤트 수식어 .prevent / .enter">
@@ -63,9 +101,9 @@ const clicks = ref(0)
       </div>
     </DemoBox>
     <div class="key">
-      <strong>이벤트 수식어</strong>(<code>.prevent</code>, <code>.stop</code>,
-      <code>.enter</code>, <code>.once</code>)는 React에 없는 Vue만의 편의 기능입니다.
-      <code>e.preventDefault()</code>를 손으로 안 써도 됩니다.
+      <strong>이벤트 수식어</strong>(<code>.prevent</code>, <code>.stop</code>, <code>.enter</code>,
+      <code>.once</code>)는 React에 없는 Vue만의 편의 기능입니다. <code>e.preventDefault()</code>를
+      손으로 안 써도 됩니다.
     </div>
   </TopicPage>
 </template>

@@ -15,8 +15,11 @@
 | 03  | 이벤트 & 폼 바인딩      | `v-model` / 이벤트 수식어 ↔ controlled component         |
 | 04  | 생명주기 & 사이드이펙트 | `onMounted` / `watch` / `watchEffect` ↔ `useEffect`      |
 | 05  | 컴포넌트 통신           | `props` / `emit` / `slot` ↔ `props` / 콜백 / `children`  |
-| 06  | 상태관리                | Pinia ↔ Redux / Zustand                                  |
-| 07  | 라우팅                  | vue-router ↔ react-router                                |
+| 06  | 상태관리                | Pinia ↔ Redux / Zustand · 모듈 스코프 ref                |
+| 07  | 라우팅                  | vue-router ↔ react-router · navigation guard             |
+| 08  | 반응성 함정             | 구조분해 / 재할당 / props — 반응성이 끊기는 패턴         |
+| 09  | DOM 접근 & nextTick     | template ref / `defineExpose` ↔ `useRef` / `forwardRef`  |
+| 10  | 내장 컴포넌트           | `Teleport` / `KeepAlive` / `Transition` ↔ Portal 등      |
 
 ## 기술 스택
 
@@ -50,7 +53,8 @@ src/
 │     ├─ CodeBlock.vue         # shiki 하이라이팅 코드 블록
 │     ├─ CompareCode.vue       # Vue | React 2열 비교 카드
 │     ├─ DemoBox.vue           # 라이브 데모를 감싸는 카드
-│     └─ demos/                # 데모 전용 자식 컴포넌트(LikeButton, InfoCard)
+│     └─ demos/                # 데모 전용 자식 컴포넌트
+│        #  LikeButton(emit) · InfoCard(slot) · InjectedBadge(inject) · KeepAliveCounter(KeepAlive)
 ├─ stores/counter.ts           # Pinia 스토어 (06 상태관리 데모에서 사용)
 └─ views/
    ├─ HomeView.vue             # 개요 + 멘탈 모델 매핑 표
@@ -62,7 +66,10 @@ src/
       ├─ LifecycleView.vue     # 04
       ├─ ComponentsView.vue    # 05
       ├─ StateView.vue         # 06
-      └─ RoutingView.vue       # 07
+      ├─ RoutingView.vue       # 07
+      ├─ GotchasView.vue       # 08
+      ├─ DomView.vue           # 09
+      └─ BuiltinsView.vue      # 10
 ```
 
 > **왜 코드 샘플이 `samples.ts`에 따로 있나?**

@@ -70,4 +70,28 @@ export const topics: Topic[] = [
     summary: 'vue-router vs react-router',
     component: () => import('@/views/topics/RoutingView.vue'),
   },
+  {
+    no: 8,
+    path: '/gotchas',
+    name: 'gotchas',
+    title: '반응성 함정',
+    summary: '구조분해 / 재할당 / props — 반응성이 끊기는 패턴',
+    component: () => import('@/views/topics/GotchasView.vue'),
+  },
+  {
+    no: 9,
+    path: '/dom',
+    name: 'dom',
+    title: 'DOM 접근 & nextTick',
+    summary: 'template ref / defineExpose vs useRef / forwardRef',
+    component: () => import('@/views/topics/DomView.vue'),
+  },
+  {
+    no: 10,
+    path: '/builtins',
+    name: 'builtins',
+    title: '내장 컴포넌트',
+    summary: 'Teleport / KeepAlive / Transition vs Portal · 라이브러리',
+    component: () => import('@/views/topics/BuiltinsView.vue'),
+  },
 ]

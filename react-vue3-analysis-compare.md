@@ -347,20 +347,30 @@ React 생태계와 **겹치는 것 / 다른 것**:
 
 ## 📋 한 장 요약 (React → Vue 매핑)
 
-| React                  | Vue 3                       | 한 줄                                      |
-| ---------------------- | --------------------------- | ------------------------------------------ |
-| `useState`             | `ref` / `reactive`          | `.value` 필요(ref), 직접 변이 OK(reactive) |
-| `useMemo`              | `computed`                  | deps 배열 불필요 (자동 추적)               |
-| `useEffect([])`        | `onMounted` / `onUnmounted` | 용도별 분리                                |
-| `useEffect([deps])`    | `watch` / `watchEffect`     | watch는 old값도 줌                         |
-| custom hook            | composable                  | setup당 1회 실행                           |
-| JSX `{cond ?:}` `.map` | `v-if` `v-for`              | 디렉티브                                   |
-| `value`+`onChange`     | `v-model`                   | 양방향 바인딩(설탕)                        |
-| 콜백 prop              | `emit`                      | 이벤트 ↑                                   |
-| children / render prop | slot / scoped slot          | 마크업 주입                                |
-| Redux / Zustand        | Pinia                       | dispatch 없음, store 함수 직접 호출        |
-| react-router           | vue-router                  | 공식, 1:1 대응                             |
-| CSS Modules            | `<style scoped>`            | 기본 제공                                  |
+| React                  | Vue 3                       | 한 줄                                       |
+| ---------------------- | --------------------------- | ------------------------------------------- |
+| `useState`             | `ref` / `reactive`          | `.value` 필요(ref), 직접 변이 OK(reactive)  |
+| `useMemo`              | `computed`                  | deps 배열 불필요 (자동 추적)                |
+| `useEffect([])`        | `onMounted` / `onUnmounted` | 용도별 분리                                 |
+| `useEffect([deps])`    | `watch` / `watchEffect`     | watch는 old값도 줌                          |
+| custom hook            | composable                  | setup당 1회 실행                            |
+| JSX `{cond ?:}` `.map` | `v-if` `v-for`              | 디렉티브                                    |
+| `value`+`onChange`     | `v-model`                   | 양방향 바인딩(설탕)                         |
+| 콜백 prop              | `emit`                      | 이벤트 ↑                                    |
+| children / render prop | slot / scoped slot          | 마크업 주입                                 |
+| Redux / Zustand        | Pinia                       | dispatch 없음, store 함수 직접 호출         |
+| react-router           | vue-router                  | 공식, 1:1 대응 + 전역 navigation guard      |
+| CSS Modules            | `<style scoped>`            | 기본 제공                                   |
+| Context API            | `provide` / `inject`        | Provider 래핑 없이 setup에서 호출           |
+| `useRef` (DOM)         | template ref                | `useTemplateRef` (3.5+), 마운트 전 null     |
+| `useRef` (mutable 값)  | 그냥 일반 변수              | setup이 1회만 실행되니 클로저로 충분        |
+| `useImperativeHandle`  | `defineExpose`              | `<script setup>`은 기본적으로 닫혀 있음     |
+| `useEffect`로 렌더 후  | `await nextTick()`          | DOM 반영 완료를 명령형으로 대기             |
+| `createPortal`         | `<Teleport>`                | 내장                                        |
+| (대응물 없음)          | `<KeepAlive>`               | 언마운트 대신 캐시 — 상태 보존              |
+| framer-motion 류       | `<Transition>`              | enter/leave 클래스 자동 부착, 내장          |
+| ErrorBoundary 클래스   | `onErrorCaptured`           | 훅 하나라 composable로도 가능               |
+| `memo` / `useCallback` | (대부분 불필요)             | 자동 추적 — 극단적 경우만 `v-once`/`v-memo` |
 
 ---
 
@@ -379,3 +389,7 @@ React 생태계와 **겹치는 것 / 다른 것**:
 - slot의 scoped slot
 - `defineModel` 컴파일 결과
 - `npm run dev`로 띄워서 라이브 데모 보며 설명
+
+> 이후 학습 앱에 토픽 08(반응성 함정 — 구조분해/재할당/props), 09(DOM 접근 & nextTick),
+> 10(내장 컴포넌트 — Teleport/KeepAlive/Transition/Suspense)이 추가되어
+> 위 요약표의 항목 대부분을 라이브 데모로 확인할 수 있다.

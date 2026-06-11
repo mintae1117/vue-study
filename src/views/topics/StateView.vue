@@ -16,16 +16,16 @@ const { count, doubleCount } = storeToRefs(counter)
 <template>
   <TopicPage :no="6" title="상태관리" subtitle="Pinia vs Redux / Zustand / Context">
     <p>
-      Vue의 공식 상태관리는 <strong>Pinia</strong>입니다. Redux의 보일러플레이트
-      (action / reducer / dispatch)가 거의 없고, <strong>Zustand</strong>와 매우 비슷한 감각입니다.
-      스토어 안에서 <code>ref</code>/<code>computed</code>/함수를 그냥 정의하고 <code>return</code>하면
-      끝 — 컴포넌트의 <code>&lt;script setup&gt;</code>과 작성법이 똑같습니다.
+      Vue의 공식 상태관리는 <strong>Pinia</strong>입니다. Redux의 보일러플레이트 (action / reducer /
+      dispatch)가 거의 없고, <strong>Zustand</strong>와 매우 비슷한 감각입니다. 스토어 안에서
+      <code>ref</code>/<code>computed</code>/함수를 그냥 정의하고 <code>return</code>하면 끝 —
+      컴포넌트의 <code>&lt;script setup&gt;</code>과 작성법이 똑같습니다.
     </p>
 
     <div class="key">
       <strong>핵심:</strong> Pinia는 <em>dispatch / action type 문자열이 없습니다.</em> 스토어의
-      함수를 메서드처럼 직접 호출하면 됩니다. <code>computed</code>는 Redux의 selector(또는 reselect)
-      역할을 자동으로 합니다.
+      함수를 메서드처럼 직접 호출하면 됩니다. <code>computed</code>는 Redux의 selector(또는
+      reselect) 역할을 자동으로 합니다.
     </div>
 
     <h2>Pinia vs Redux Toolkit</h2>
@@ -37,15 +37,17 @@ const { count, doubleCount } = storeToRefs(counter)
     <DemoBox title="Pinia 라이브 데모 (전역 스토어)">
       <div class="flex flex-wrap items-center gap-4">
         <UiButton @click="counter.increment()">increment()</UiButton>
-        <span>count = <strong class="font-semibold text-foreground">{{ count }}</strong></span>
+        <span
+          >count = <strong class="font-semibold text-foreground">{{ count }}</strong></span
+        >
         <span
           >doubleCount(getter) =
           <strong class="font-semibold text-foreground">{{ doubleCount }}</strong></span
         >
       </div>
       <p class="mt-2.5 text-[0.82rem] text-muted-foreground">
-        이 값은 <strong>전역</strong>입니다. 다른 메뉴(예: 라우팅 페이지)로 갔다 와도 값이 유지됩니다 —
-        Redux store / Zustand store 가 컴포넌트 트리 밖에 사는 것과 같습니다.
+        이 값은 <strong>전역</strong>입니다. 다른 메뉴(예: 라우팅 페이지)로 갔다 와도 값이
+        유지됩니다 — Redux store / Zustand store 가 컴포넌트 트리 밖에 사는 것과 같습니다.
       </p>
     </DemoBox>
 
@@ -53,7 +55,8 @@ const { count, doubleCount } = storeToRefs(counter)
     <p>
       Pinia 스토어를 <code>const { count } = counter</code>로 그냥 분해하면 반응성이 끊깁니다.
       <code>storeToRefs(counter)</code>로 감싸야 <code>ref</code>로 유지됩니다. (함수/액션은 그냥
-      분해해도 OK.) React에서 Zustand selector를 잘못 써서 리렌더가 안 되는 실수와 비슷한 함정입니다.
+      분해해도 OK.) React에서 Zustand selector를 잘못 써서 리렌더가 안 되는 실수와 비슷한
+      함정입니다.
     </p>
     <CompareCode
       :vue="s.storeToRefsVue"
@@ -61,5 +64,25 @@ const { count, doubleCount } = storeToRefs(counter)
       vue-lang="ts"
       react-lang="ts"
     />
+
+    <h2>Pinia 없이 전역 상태 — 모듈 스코프 ref</h2>
+    <p>
+      Vue 의 반응성은 컴포넌트 밖에서도 동작하므로,
+      <strong>모듈 최상단에 둔 <code>ref</code> 가 그대로 전역 상태</strong>가 됩니다. React 에선
+      모듈 변수가 바뀌어도 리렌더가 안 일어나 불가능했던 일이고, 그래서 Zustand 같은 "외부 스토어 +
+      구독" 장치가 필요했던 것입니다.
+    </p>
+    <CompareCode
+      :vue="s.moduleStateVue"
+      :react="s.moduleStateReact"
+      vue-lang="ts"
+      react-lang="ts"
+    />
+    <div class="key">
+      <strong>이 앱이 실제로 쓰는 패턴입니다</strong> — 우상단 테마 토글이
+      <code>src/composables/useTheme.ts</code> 의 모듈 스코프 ref 하나로 동작합니다. devtools 연동
+      등이 필요해지면 Pinia 로, 가볍게는 이 패턴으로. 참고로 이런 composable 모음 라이브러리가
+      <strong>VueUse</strong> 입니다 (react-use 대응, Vue 생태계의 사실상 표준 유틸).
+    </div>
   </TopicPage>
 </template>

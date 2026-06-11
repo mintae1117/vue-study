@@ -10,6 +10,11 @@ const mapping: { react: string; vue: string }[] = [
   { react: 'controlled input', vue: 'v-model' },
   { react: '콜백 prop', vue: 'emit' },
   { react: 'children', vue: '<slot>' },
+  { react: 'Context API', vue: 'provide / inject' },
+  { react: 'useRef (DOM)', vue: 'template ref / useTemplateRef' },
+  { react: 'useImperativeHandle', vue: 'defineExpose' },
+  { react: 'createPortal', vue: '<Teleport>' },
+  { react: 'memo / useCallback', vue: '(대부분 불필요 — 자동 추적)' },
   { react: 'Redux / Zustand', vue: 'Pinia' },
   { react: 'react-router', vue: 'vue-router' },
 ]

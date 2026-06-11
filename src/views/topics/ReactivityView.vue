@@ -37,7 +37,9 @@ const profile = reactive({ name: '민태', likes: 0 })
     <DemoBox title="ref + computed 라이브 데모">
       <div class="flex flex-wrap items-center gap-4">
         <UiButton @click="count++">count++</UiButton>
-        <span>count = <strong class="font-semibold text-foreground">{{ count }}</strong></span>
+        <span
+          >count = <strong class="font-semibold text-foreground">{{ count }}</strong></span
+        >
         <span
           >double(computed) =
           <strong class="font-semibold text-foreground">{{ double }}</strong></span
@@ -66,8 +68,26 @@ const profile = reactive({ name: '민태', likes: 0 })
 
     <div class="key">
       <strong>주의:</strong> <code>ref</code>는 <code>&lt;script&gt;</code> 안에서는
-      <code>.value</code>가 필요하지만, <code>&lt;template&gt;</code> 안에서는 Vue가 자동으로 풀어줘서
-      <code>.value</code> 없이 씁니다.
+      <code>.value</code>가 필요하지만, <code>&lt;template&gt;</code> 안에서는 Vue가 자동으로
+      풀어줘서 <code>.value</code> 없이 씁니다.
+    </div>
+
+    <h2>그럼 memo / useCallback 은 뭘로 대체하나?</h2>
+    <p>
+      답은 <strong>"대부분 필요 없다"</strong> 입니다. React 에서 그 셋이 필요했던 이유는 "함수
+      재실행" 모델의 부작용(불필요한 재계산·재생성·자식 리렌더)을 막기 위해서였는데, Vue 는
+      컴포넌트별로 의존성을 추적해 <strong>바뀐 컴포넌트만</strong> 다시 렌더하므로 문제 자체가
+      없습니다. 함수도 setup 에서 1회만 만들어지니 <code>useCallback</code> 할 게 없고요.
+    </p>
+    <div class="key">
+      극단적인 경우를 위한 도구는 있습니다 — <code>v-once</code>(한 번만 렌더),
+      <code>v-memo</code>(조건부 렌더 스킵). 하지만 실무에서 쓸 일은 드뭅니다. "memoization 을 안
+      해도 된다"가 React 개발자가 Vue 에서 얻는 가장 큰 휴식입니다.
+    </div>
+
+    <div class="key">
+      <strong>이어서 보기:</strong> 반응성 연결이 <em>끊기는</em> 패턴(구조분해, 재할당, props)은
+      함정이 많아 별도 토픽으로 정리했습니다 — <strong>08 반응성 함정</strong>.
     </div>
   </TopicPage>
 </template>
